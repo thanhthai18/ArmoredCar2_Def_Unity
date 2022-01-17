@@ -253,7 +253,7 @@ public class GameController_ArmoredCarMinigame2 : MonoBehaviour
     {
         spawnCoroutine = StartCoroutine(SetUpMap(stage));
     }
-
+    bool isOK;
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && isBegin)
@@ -288,6 +288,18 @@ public class GameController_ArmoredCarMinigame2 : MonoBehaviour
         {
             isHoldCar = false;
         }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            isOK = true;
+        }
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            isOK = false;
+        }
+        if (isOK)
+        {
+            armoredCar.transform.Translate(new Vector2(1,0)  * Time.deltaTime * 5);
+        }
 
         if (isHoldCar)
         {
@@ -307,7 +319,7 @@ public class GameController_ArmoredCarMinigame2 : MonoBehaviour
             {
                 if (armoredCar.transform.position.y < castle.transform.position.y)
                 {
-                    mouseCurrentPos = new Vector2(Mathf.Clamp(mouseCurrentPos.x, -mainCamera.orthographicSize * f2 + 1.3f + tmpPos_ArmoredCar.x, mainCamera.orthographicSize * f2 - 1.3f + tmpPos_ArmoredCar.x), Mathf.Clamp(mouseCurrentPos.y, -mainCamera.orthographicSize + 0.5f + tmpPos_ArmoredCar.y, castle.transform.position.y - 1.3f - 1.1f + tmpPos_ArmoredCar.y));
+                    mouseCurrentPos = new Vector2(Mathf.Clamp(mouseCurrentPos.x, -mainCamera.orthographicSize * f2 + 1.3f + tmpPos_ArmoredCar.x, mainCamera.orthographicSize * f2 - 1.3f + tmpPos_ArmoredCar.x), Mathf.Clamp(mouseCurrentPos.y, -mainCamera.orthographicSize + 0.5f + tmpPos_ArmoredCar.y, castle.transform.position.y - 1f - 1.1f + tmpPos_ArmoredCar.y));
                 }
                 if (armoredCar.transform.position.y > castle.transform.position.y)
                 {
@@ -324,5 +336,7 @@ public class GameController_ArmoredCarMinigame2 : MonoBehaviour
             //armoredCar.transform.position = new Vector2(mouseCurrentPos.x - tmpPos_ArmoredCar.x, mouseCurrentPos.y - tmpPos_ArmoredCar.y);
             armoredCar.transform.DOMove(new Vector2(mouseCurrentPos.x - tmpPos_ArmoredCar.x, mouseCurrentPos.y - tmpPos_ArmoredCar.y), 0.05f);
         }
+
     }
+
 }
